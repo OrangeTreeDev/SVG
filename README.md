@@ -13,4 +13,7 @@ Snap.animate(length, 0, function(val){
     strokeRect.attr({'stroke-dashoffset':val});
   }, 2000, mina.easeinout(), null
 );
-### 轨迹跟踪
+```
+### 效果截图
+
+
