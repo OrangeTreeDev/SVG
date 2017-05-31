@@ -1,2 +1,6 @@
 # SVG
-the coding libs about learing the SVG
+学习SVG相关知识的总结笔记
+
+###描边动画
+
+###轨迹跟踪
