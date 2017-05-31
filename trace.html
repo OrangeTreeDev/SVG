@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="snap.svg-min.js"></script>
+    <style type="text/css">
+        html, body{
+            width: 100%;
+            height: 100%;
+        }
+
+        svg{
+            width: 100%;
+            height: 100%;
+            background-color: gray;
+        }
+
+        #trace{
+            stroke: red;
+            stroke-width: 1px;
+            fill: none;
+        }
+
+        #plane{
+            stroke: rgba(255,255,255,0.8);
+            stroke-width: 1;
+            fill: rgba(255,255,255,0.5);
+        }
+    </style>
+</head>
+<body>
+<svg id="svg">
+    <path id="trace" d="M221.712,180.442C237.176,177.728,279.348,178.094,261,152c-18.742-26.654-48.543-28.207-63-22-14.981,6.431-34.763,6.357-34,40s66.09,74.162,88,68,60.358-23.742,67-49,14.211-59.957-27-81S163.688,88.664,153,98c-7.828,6.838-32.045,22.952-32,64,0.039,35.491,7.878,62.872,14,78s52.737,39.557,73,41,58.638,16.552,105-7c44.249-22.478,75.073-94.409,55-164C349.768,46.792,217.142,54.519,200,55S104.613,66.128,78,111c-16.922,28.532-16.5,96.616,1,134,14.482,30.932,51.88,58.52,68,64,39.988,13.593,100.081,21.615,129,17"
+    ></path>
+    <path id="plane" d="M219.712,169.046 L229.444 179.085 L224.042 191.838 z"></path>
+</svg>
+</body>
+</html>
+<script type="text/javascript">
+    var snap = Snap('#svg');
+    var trace = snap.select('#trace');
+    var plane = snap.select('#plane');
+    var length = trace.getTotalLength();
+    var animation = function (){
+        Snap.animate(0,length,function(val){
+            var pt = Snap.path.getPointAtLength(trace, val); // getPointAtLength获取的坐标是绝对左边
+            var matrix = new Snap.Matrix();
+            var tx = pt.x - 221.712;
+            var ty = pt.y - 180.442;
+            matrix.translate(tx, ty); // tx，ty是横向与纵向的移动相对位置
+            matrix.rotate(pt.alpha-180,221.712,180.442), // 默认旋转中心是（0,0），需要改成围绕物体的中心
+                    plane.transform(matrix);
+        }, 10000, mina.linear(), function(){
+            animation();
+        })
+    }
+    animation();
+
+</script>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="snap.svg-min.js"></script>
+    <style type="text/css">
+        html, body{
+            width: 100%;
+            height: 100%;
+        }
+
+        svg{
+            width: 100%;
+            height: 100%;
+            background-color: gray;
+        }
+    </style>
+</head>
+<body>
+<svg id="svg">
+</svg>
+</body>
+</html>
+<script type="text/javascript">
+    var snap = Snap('#svg');
+    var strokeRect = snap.paper.rect({id:'strokeRect',
+        x:100,
+        y:100,
+        width: 200,
+        height: 200,
+        stroke:'green',
+        strokeWidth:4,
+        fill:'none'}
+    );
+    var length = strokeRect.getTotalLength();
+    strokeRect.attr({'stroke-dasharray': length,'stroke-dashoffset':length});
+
+    //    动画变换动态添加的属性，必须使用Snap.animate方法
+    //    strokeRect.animate({
+    //        'stroke-dashoffset':200
+    //    }, 2000, mina.easeinout(),function(){
+    //        console.log('stroke rectangle is finished! ');
+    //    });
+    Snap.animate(length, 0, function(val){
+        strokeRect.attr({'stroke-dashoffset':val});
+    }, 2000, mina.easeinout(), function(){
+        console.log('stroking rectangle is done! ');
+    });
+</script>
